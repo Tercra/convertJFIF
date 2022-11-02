@@ -17,7 +17,22 @@ fi
 changes () {
     # echo $1
     name="${1%.jfif}.png"
+
+    # Check if there is going to a file that will be overwritten if conversion were to take place
+    if [ -f "$name" ]
+    then
+        echo "There already exists a file named: $name"
+        exit
+    fi
+
     convert "$1" "$name"
+
+    # Confirm if the newly made file was actually made
+    if [ ! -f "$name" ]
+    then
+        echo "$name has not been made"
+        exit
+    fi
     rm "$1"
 }
 
